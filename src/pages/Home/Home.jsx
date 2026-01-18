@@ -18,6 +18,7 @@ const Home = () => {
       navigate('/signup')
     }
   },[])
+  
   return (
     <main className="flex-1">
       <div id="hero-section" className="flex w-full h-full lg:px-30 md:px-22 sm:px-12 px-8">

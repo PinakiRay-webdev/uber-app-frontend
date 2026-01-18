@@ -1,23 +1,18 @@
-import React, { useEffect, useRef} from "react";
-import { useLocation } from "react-router-dom";
-import {
-  leftNavElements,
-  rightNavElements,
-} from "../../constants/constants.js";
+import React, { useEffect, useRef } from "react";
+import { useLocation} from "react-router-dom";
+import { leftNavElements } from "../../constants/constants.js";
 const Navbar = () => {
+  const location = useLocation();
+  const leftNavref = useRef(null);
+  const rightNavref = useRef(null);
 
-    const location = useLocation()
-    const leftNavref = useRef(null)
-    const rightNavref = useRef(null)
-
-    const pathname = location.pathname.split("/")[1]
-
-    useEffect(() =>{
-        if(pathname === "signup" || pathname === "signin"){
-            leftNavref.current.style.display = "none"
-            rightNavref.current.style.display = "none"
-        }
-    })
+  useEffect(() => {
+    const pathname = location.pathname.split("/")[1];
+    if (pathname === "signup" || pathname === "signin") {
+      leftNavref.current.style.display = "none";
+      rightNavref.current.style.display = "none";
+    }
+  });
 
   return (
     <nav className="bg-black py-4 lg:px-30 md:px-22 sm:px-12 px-8 flex justify-between">
@@ -34,16 +29,13 @@ const Navbar = () => {
           ))}
         </ul>
       </div>
-      <div id="right" className="">
-        <ul ref={rightNavref} className={`flex gap-1`}>
-          {rightNavElements.map((ele, index) => (
-            <li
-              key={index}
-              className="text-white capitalize text-sm font-[medium] cursor-pointer hover:bg-zinc-900 px-3 py-2 rounded-full last:bg-white last:text-black last:hover:bg-zinc-200 last:px-5"
-            >
-              {ele}
-            </li>
-          ))}
+      <div ref={rightNavref} id="right" className="">
+        <ul className="flex gap-1">
+          <li
+            className="text-white capitalize text-sm font-[medium] cursor-pointer hover:bg-zinc-900 px-3 py-1 rounded-full"
+          >
+            Logout
+          </li>
         </ul>
       </div>
     </nav>
