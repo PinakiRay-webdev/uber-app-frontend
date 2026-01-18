@@ -35,7 +35,8 @@ const Signup = () => {
         }, (1500));
       }).catch((error) =>{
         toast.dismiss()
-        toast.error(error.message, {theme: 'dark'})
+        const errorMessage = error.response?.data?.message || error.message
+        toast.error(errorMessage, {theme: 'dark'})
       })
   };
 
