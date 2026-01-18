@@ -1,4 +1,5 @@
-import React from "react";
+import React, { useEffect } from "react";
+import { useNavigate } from "react-router-dom";
 import { TiLocation } from "react-icons/ti";
 import { FaDotCircle } from "react-icons/fa";
 import { IoNavigate } from "react-icons/io5";
@@ -7,6 +8,16 @@ import homebg from "../../assets/home-bg.webp"
 
 
 const Home = () => {
+
+  const navigate = useNavigate()
+
+  useEffect(() =>{
+    const isToken = JSON.parse(localStorage.getItem('userCredentials'))?.token
+
+    if(!isToken){
+      navigate('/signup')
+    }
+  },[])
   return (
     <main className="flex-1">
       <div id="hero-section" className="flex w-full h-full lg:px-30 md:px-22 sm:px-12 px-8">

@@ -1,14 +1,13 @@
 import React from "react";
-import {useNavigate} from "react-router-dom"
+import { useNavigate } from "react-router-dom";
 import googleIcon from "../../assets/google-icon.svg";
 import appleIcon from "../../assets/apple-icon.svg";
 import { useForm } from "react-hook-form";
-import {toast, ToastContainer} from "react-toastify"
-import axios from "axios"
+import { toast, ToastContainer } from "react-toastify";
+import axios from "axios";
 
 const Signup = () => {
-
-  const navigator = useNavigate()
+  const navigator = useNavigate();
 
   const {
     register,
@@ -17,27 +16,30 @@ const Signup = () => {
   } = useForm();
 
   const handleSignup = async (data) => {
-    toast.loading('signing up....', {theme: 'dark'})
-      const userdata = {
-        name: data.name,
-        email: data.email,
-        password: data.password
-      }
-      await axios.post(`http://localhost:3000/api/user/register`,userdata, {
-        headers:{
-          'Content-Type': 'application/json'
-        }
-      }).then(() =>{
-        toast.dismiss()
-        toast.success('Successfully signed up!!', {theme: 'dark'})
-        setTimeout(() => {
-          navigator('/signin')
-        }, (1500));
-      }).catch((error) =>{
-        toast.dismiss()
-        const errorMessage = error.response?.data?.message || error.message
-        toast.error(errorMessage, {theme: 'dark'})
+    toast.loading("signing up....", { theme: "dark" });
+    const userdata = {
+      name: data.name,
+      email: data.email,
+      password: data.password,
+    };
+    await axios
+      .post(`http://localhost:3000/api/user/register`, userdata, {
+        headers: {
+          "Content-Type": "application/json",
+        },
       })
+      .then(() => {
+        toast.dismiss();
+        toast.success("Successfully signed up!!", { theme: "dark" });
+        setTimeout(() => {
+          navigator("/signin");
+        }, 1500);
+      })
+      .catch((error) => {
+        toast.dismiss();
+        const errorMessage = error.response?.data?.message || error.message;
+        toast.error(errorMessage, { theme: "dark" });
+      });
   };
 
   return (
@@ -125,7 +127,7 @@ const Signup = () => {
           WhatsApp, or texts from Uber and its affiliates.
         </p>
       </section>
-      <ToastContainer/>
+      <ToastContainer />
     </main>
   );
 };

@@ -6,7 +6,6 @@ import { toast, ToastContainer } from "react-toastify";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
 
-
 const Signin = () => {
   const {
     register,
@@ -14,7 +13,7 @@ const Signin = () => {
     formState: { errors },
   } = useForm();
 
-  const navigate = useNavigate()
+  const navigate = useNavigate();
 
   const handleSignin = async (data) => {
     toast.loading("signing in", { theme: "dark" });
@@ -28,17 +27,22 @@ const Signin = () => {
           "Content-Type": "application/json",
         },
       })
-      .then(() => {
+      .then((userCredentials) => {
         toast.dismiss();
         toast.success("successfully signned in", { theme: "dark" });
+        
+        localStorage.setItem('userCredentials',JSON.stringify({
+          token: userCredentials.data.token
+        }))
+        
         setTimeout(() => {
-          navigate('/')
+          navigate("/");
         }, 1500);
       })
       .catch((error) => {
-        toast.dismiss()
-        const errorMessage = error.response?.data?.message || error.message
-        toast.error(errorMessage, {theme: 'dark'})
+        toast.dismiss();
+        const errorMessage = error.response?.data?.message || error.message;
+        toast.error(errorMessage, { theme: "dark" });
       });
   };
 
@@ -60,7 +64,9 @@ const Signin = () => {
             type="email"
             placeholder="Enter your email"
           />
-          {errors.email && <span className="text-red-600" >{errors.email.message}</span>}
+          {errors.email && (
+            <span className="text-red-600">{errors.email.message}</span>
+          )}
           <input
             {...register("password", {
               required: {
@@ -72,7 +78,9 @@ const Signin = () => {
             type="password"
             placeholder="Enter your password"
           />
-          {errors.password && <span className="text-red-600" >{errors.password.message}</span>}
+          {errors.password && (
+            <span className="text-red-600">{errors.password.message}</span>
+          )}
 
           <button className="bg-black text-white w-full py-3 rounded-md mt-4 cursor-pointer hover:bg-zinc-800">
             Continue
@@ -104,7 +112,7 @@ const Signin = () => {
           WhatsApp, or texts from Uber and its affiliates.
         </p>
       </section>
-      <ToastContainer/>
+      <ToastContainer />
     </main>
   );
 };
